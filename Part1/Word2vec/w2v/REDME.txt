@@ -1,0 +1,5 @@
+1 - > make w2v as current working directory and put DUC01 dataset in it
+2 - > make graphs, clusteredGraphs and summary directory in w2v directory if not exists 
+3 - > run w2v_part1.py for creating graphs
+4 - > paas graphs as input to clustering algorithm in c++. and you will get output in clusterdGraphs
+5 - > run w2v_part2.py for generating summary in summary folder.

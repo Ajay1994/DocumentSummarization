@@ -1,0 +1,81 @@
+load("/media/abhisheka/Windows8_OS/Users/Abhishek/Downloads/Compressed/PRODUCT Reco/IR.RData")
+View(T_Matrix)
+setwd("/home/abhisheka/Desktop/CN/attachments/DUC01/d04a")
+rm(list=ls(all=TRUE))
+fileloc<-"ft923-5089.txt"
+conn <- file(fileloc,open="r")
+setwd("/home/abhisheka/Desktop/CN/attachments/DUC01/d04a/")
+conn <- file(fileloc,open="r")
+getwd
+getwd()
+setwd("/home/abhisheka/Desktop/CN/attachments/DUC01/d04a/ft923-5089")
+conn <- file(fileloc,open="r")
+linn <-readLines(conn)
+isIntro=0
+txt<-""
+for (i in 1:length(linn)) {
+if(linn[i]=="Introduction:"){
+isIntro=1
+next
+}
+if(isIntro==1){
+txt<-paste(txt,linn[i],sep = " ",collapse = NULL)
+}
+}
+txt
+txt1<-gsub("[[:space:]]+", " ", txt)
+txt1<-gsub("`+", "", txt1)
+txt1<-gsub("'+", "", txt1)
+txt1<-gsub("[[:space:]]+", " ", txt1)
+txt1<-gsub("[@|$|;|:|!|,|_|-|(|)|\"|*|?|{|}]", "", txt1)
+txt1<-gsub("[-]", "", txt1)
+sl1<-unlist( strsplit(txt1, "(?<=[^A-Z].[.?]) +(?=[A-Z])", perl = TRUE))
+sl<-unlist( strsplit(txt1, "(?<=\\.|\\?)\\s(?=[A-Z])", perl = TRUE))
+install.packages("openNLP")
+require("NLP")
+require("NLP")
+library(NLP)
+library(openNLP)
+scentence<-"I am Abhishek"
+tagPOS(sentence, language = "en", model = NULL, tagdict = NULL)
+install.packages("openNLP")
+library(openNLP)
+install.packages("http://datacube.wu.ac.at/src/contrib/openNLPmodels.en_1.5-1.tar.gz",
+repos=NULL, type="source")
+library(openNLP)
+library(openNLP)
+library("openNLPmodels.en", lib.loc="~/R/x86_64-pc-linux-gnu-library/3.2")
+library(openNLPmodels.en)
+library(tm)
+library(stringr)
+library(gsubfn)
+install.packages("gsubfn")
+library(plyr)
+install.packages("foo", repos = "http://datacube.wu.ac.at/", type = "source")
+install.packages("openNLPmodels.en", repos = "http://datacube.wu.ac.at/", type = "source")
+install.packages("openNLPmodels.en", repos = "http://datacube.wu.ac.at/",
+;
+install.packages("openNLPmodels.en", repos = "http://datacube.wu.ac.at/", type = "source")
+require("openNLP")
+tagPOS(sentence, language = "en", model = NULL, tagdict = NULL)
+tagPOS <-  function(x, ...) {
+s <- as.String(x)
+word_token_annotator <- Maxent_Word_Token_Annotator()
+a2 <- Annotation(1L, "sentence", 1L, nchar(s))
+a2 <- annotate(s, word_token_annotator, a2)
+a3 <- annotate(s, Maxent_POS_Tag_Annotator(), a2)
+a3w <- a3[a3$type == "word"]
+POStags <- unlist(lapply(a3w$features, `[[`, "POS"))
+POStagged <- paste(sprintf("%s/%s", s[a3w], POStags), collapse = " ")
+list(POStagged = POStagged, POStags = POStags)
+}
+tagged_str <-  tagPOS(sentence)
+??as.string
+library(rjson)
+library(MASS)
+library(RTextTools)
+library(topicmodels)
+library(gdata)
+library(NLP)
+tagged_str <-  tagPOS(sentence)
+tagged_str <-  tagPOS(scentence)

@@ -1,0 +1,97 @@
+##################################################
+# run louvian c++ code for graphs directory. and make clustered graph directory
+#################################################
+
+## Part 2 -- > after clustering in c++
+
+#####################################
+for file in txtFiles:
+    #Opening and Reading the file as a string 
+    if file == "ap900322-0200_system.txt" or file == "ap900322-0200_system1.txt":
+        continue
+    with open(file, 'r') as myfile:
+        data=myfile.read().replace('\n', '')
+    
+    #Tokenize into sentences    
+    sentences = sent_tokenize(data)
+    
+    #Get a list of stop words of english sentence
+    stop_words = set(stopwords.words("english"))
+    
+    #Creating a matrix to hold the sentence vectors of the doucment
+    sent_matrix = np.zeros((len(sentences), 10))
+    
+    sent_no = 0
+    
+    for s in sentences:
+        #tokenize the sentence
+        words = word_tokenize(s)
+        #create a sentence vector of dimension 300
+        sentVector = np.zeros(10)
+        #filter out the words in sentences which not belong to stop word category
+        filteredSentence = [w for w in words if not w in stop_words] 
+        sentVector2 = np.zeros(10)
+        ##from lda model get sent vec
+        vec_bow = dictionary.doc2bow(filteredSentence)
+        sentVector = ldamodel[vec_bow] 
+        sentVector = np.array(sentVector) 
+
+        availabldim = []
+        for j in sentVector :
+            sentVector2[int(j[0])] = j[1]   
+        sent_matrix[sent_no,:] = sentVector2
+        #Iterate over the next sentence
+        sent_no += 1
+    
+    #########################################################################################
+    
+    filename = file.split("\\")
+    filename = filename[len(filename)-1]
+    
+    to_read = '.\\clusteredGraphs\\'+filename
+    print(to_read)
+    
+    if filename == "ap900322-0200_system.txt" or filename == "ap900322-0200_system1.txt":
+        continue
+    try:    
+        result = pd.read_csv(to_read, sep=" ", header = None)
+        result.columns = ["node", "cluster"] 
+    except:
+        print to_read
+        continue
+    filename = filename.split(".")
+    filename = ".\\summary\\"+filename[0]+"_system.txt"
+
+    summary = open(filename, "w")    
+    
+    for cluster in range(0, max(result['cluster'])+1):
+        selectedCluster = result.loc[result['cluster'] == cluster]
+        selectedSentences = np.array(selectedCluster['node'])
+        cluster_matrix = np.zeros((len(selectedSentences), len(selectedSentences)))
+        row = 0
+        for i in selectedSentences:
+            col = 0
+            for j in selectedSentences:
+                node1 = sent_matrix[i:i+1]
+                node2 = sent_matrix[j:j+1]
+                node1 = list(node1[0])
+                node2 = list(node2[0])
+                cosine_similarity = 1 - spatial.distance.cosine(node1, node2)
+                if(math.isnan(cosine_similarity)):
+                    modified_similaity = 0
+                else:
+                    modified_similaity = int(cosine_similarity*100)
+                cluster_matrix[row,col] = modified_similaity
+                col += 1
+            row += 1
+        e_vals, e_vecs = la.eig(cluster_matrix)
+        left_vec = e_vecs[:, e_vals.argmax()] 
+        left_vec /= left_vec.sum()
+        imp_sent = (np.where(left_vec == max(left_vec))[0])[0]
+        
+        print(sentences[selectedSentences[imp_sent]])
+        
+        summary.write(sentences[selectedSentences[imp_sent]])
+    summary.close()
+    print("----------------------------------------------------------------------")
+

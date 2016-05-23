@@ -1,0 +1,216 @@
+###########################################################################
+# We have performed lovian clutering after this on each file of DUC01
+# The results of loviaan clustering are now stored in folder ClusteredGraphs folder
+############################################################################
+
+#Reading the cluster structure of the lovian of the file having cluster
+# information in format (node_id, cluster_id)
+
+result = pd.read_csv('./clusteredGraphs/wsj900615-0131.txt', sep=" ", header = None)
+result.columns = ["node", "cluster"] 
+
+
+############################################################################
+
+for file in txtFiles:
+    #Opening and Reading the file as a string 
+    if file == "ap900322-0200_system.txt" or file == "ap900322-0200_system1.txt":
+        continue
+    with open(file, 'r') as myfile:
+        data=myfile.read().replace('\n', '')
+    
+    #Tokenize into sentences    
+    sentences = sent_tokenize(data)
+    
+    #Get a list of stop words of english sentence
+    stop_words = set(stopwords.words("english"))
+    
+    #Getting the set of the vocabulary of the model
+    vocab = model.vocab
+    
+    #Creating a matrix to hold the sentence vectors of the doucment
+    sent_matrix = np.zeros((len(sentences), 300))
+    
+    sent_no = 0
+    
+    for s in sentences:
+        #tokenize the sentence
+        words = word_tokenize(s)
+        #create a sentence vector of dimension 300
+        sentVector = np.zeros(300)
+        #filter out the words in sentences which not belong to stop word category
+        filteredSentence = [w for w in words if not w in stop_words] 
+        #for each word of the sentence create a word2Vec and add each one to form a sentence vector
+        for word in filteredSentence:
+            #print(word)
+            if word in vocab:
+                wordVector = model[word]
+                sentVector = sentVector + wordVector
+        #Set the matrix ith row(sentence) with the sentence vector
+        sent_matrix[sent_no,:] = sentVector
+        #Iterate over the next sentence
+        sent_no += 1
+    
+    #########################################################################################
+    
+    filename = file.split("/")
+    filename = filename[len(filename)-1]
+    
+    to_read = './clusteredGraphs/'+filename
+    print(to_read)
+    
+    if filename == "ap900322-0200_system.txt" or filename == "ap900322-0200_system1.txt":
+        continue
+    result = pd.read_csv(to_read, sep=" ", header = None)
+    result.columns = ["node", "cluster"] 
+    
+    filename = filename.split(".")
+    filename = "./summary/"+filename[0]+"_system.txt"
+
+    summary = open(filename, "w")    
+    
+    for cluster in range(0, max(result['cluster'])+1):
+        selectedCluster = result.loc[result['cluster'] == cluster]
+        selectedSentences = np.array(selectedCluster['node'])
+        cluster_matrix = np.zeros((len(selectedSentences), len(selectedSentences)))
+        row = 0
+        for i in selectedSentences:
+            col = 0
+            for j in selectedSentences:
+                node1 = sent_matrix[i:i+1]
+                node2 = sent_matrix[j:j+1]
+                node1 = list(node1[0])
+                node2 = list(node2[0])
+                cosine_similarity = 1 - spatial.distance.cosine(node1, node2)
+                if(math.isnan(cosine_similarity)):
+                    modified_similaity = 0
+                else:
+                    modified_similaity = int(cosine_similarity*100)
+                cluster_matrix[row,col] = modified_similaity
+                col += 1
+            row += 1
+        e_vals, e_vecs = la.eig(cluster_matrix)
+        left_vec = e_vecs[:, e_vals.argmax()] 
+        left_vec /= left_vec.sum()
+        imp_sent = (np.where(left_vec == max(left_vec))[0])[0]
+        
+        print(sentences[selectedSentences[imp_sent]])
+        
+        summary.write(sentences[selectedSentences[imp_sent]])
+    summary.close()
+    print("----------------------------------------------------------------------")
+    
+    
+#########################################################################################
+# Variations with the length dependent summary
+#####################################################################################
+for file in txtFiles:
+    #Opening and Reading the file as a string 
+    if file == "ap900322-0200_system.txt" or file == "ap900322-0200_system1.txt":
+        continue
+    with open(file, 'r') as myfile:
+        data=myfile.read().replace('\n', '')
+    
+    #Tokenize into sentences    
+    sentences = sent_tokenize(data)
+    
+    #Get a list of stop words of english sentence
+    stop_words = set(stopwords.words("english"))
+    
+    #Getting the set of the vocabulary of the model
+    vocab = model.vocab
+    
+    #Creating a matrix to hold the sentence vectors of the doucment
+    sent_matrix = np.zeros((len(sentences), 300))
+    
+    sent_no = 0
+    
+    for s in sentences:
+        #tokenize the sentence
+        words = word_tokenize(s)
+        #create a sentence vector of dimension 300
+        sentVector = np.zeros(300)
+        #filter out the words in sentences which not belong to stop word category
+        filteredSentence = [w for w in words if not w in stop_words] 
+        #for each word of the sentence create a word2Vec and add each one to form a sentence vector
+        for word in filteredSentence:
+            #print(word)
+            if word in vocab:
+                wordVector = model[word]
+                sentVector = sentVector + wordVector
+        #Set the matrix ith row(sentence) with the sentence vector
+        sent_matrix[sent_no,:] = sentVector
+        #Iterate over the next sentence
+        sent_no += 1
+    
+    #########################################################################################
+    
+    filename = file.split("/")
+    filename = filename[len(filename)-1]
+    
+    to_read = './clusteredGraphs/'+filename
+    print(to_read)
+    
+    if filename == "ap900322-0200_system.txt" or filename == "ap900322-0200_system1.txt":
+        continue
+    result = pd.read_csv(to_read, sep=" ", header = None)
+    result.columns = ["node", "cluster"] 
+    
+    filename = filename.split(".")
+    filename = "./summary/"+filename[0]+"_system.txt"
+
+    summary = open(filename, "w")    
+    summary_vec = []
+    for cluster in range(0, max(result['cluster'])+1):
+        selectedCluster = result.loc[result['cluster'] == cluster]
+        selectedSentences = np.array(selectedCluster['node'])
+        cluster_matrix = np.zeros((len(selectedSentences), len(selectedSentences)))
+        row = 0
+        for i in selectedSentences:
+            col = 0
+            for j in selectedSentences:
+                node1 = sent_matrix[i:i+1]
+                node2 = sent_matrix[j:j+1]
+                node1 = list(node1[0])
+                node2 = list(node2[0])
+                cosine_similarity = 1 - spatial.distance.cosine(node1, node2)
+                if(math.isnan(cosine_similarity)):
+                    modified_similaity = 0
+                else:
+                    modified_similaity = int(cosine_similarity*100)
+                cluster_matrix[row,col] = modified_similaity
+                col += 1
+            row += 1
+        e_vals, e_vecs = la.eig(cluster_matrix)
+        left_vec = e_vecs[:, e_vals.argmax()] 
+        left_vec /= left_vec.sum()
+        sorted_vec = np.sort(left_vec)
+        cluster_sent = []
+        for i in sorted_vec:
+            imp_sent = (np.where(left_vec == i)[0])[0]
+            cluster_sent.append(selectedSentences[imp_sent])
+        summary_vec.append(cluster_sent)
+        #summary.write(sentences[selectedSentences[imp_sent]])
+    summaryvector = []
+    lengthSummary = 0
+    for cluster in summary_vec:
+        if lengthSummary < 100:
+            summaryvector.append(cluster[0])
+            lengthSummary += len(word_tokenize(sentences[cluster[0]]))
+            #print(sentences[cluster[0]])
+        else:
+            break
+    for cluster in summary_vec:
+        if len(cluster) > 1:
+            if lengthSummary < 100:
+                summaryvector.append(cluster[1])
+                lengthSummary += len(word_tokenize(sentences[cluster[1]]))
+                #print(sentences[cluster[0]])
+            else:
+                break
+    summaryvector = np.sort(summaryvector)
+    for i in summaryvector:
+        summary.write(sentences[i])
+    summary.close()
+    print("----------------------------------------------------------------------")
+        

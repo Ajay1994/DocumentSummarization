@@ -1,0 +1,6 @@
+1. We are using the Lovian Clustering Method for clustering the graphs
+2. In the Graphs folder : we have the graph prepared for entired DUC01 dataset.
+3. First "make" the Lovian file using "make".
+4. Compile "lovianclustering.c" by using "gcc lovianclustering.c"
+5. Run the produced executable by "./a.out"
+6. This will generate all the clusters on the individual DUC01 data file and save it to clusteredGraph directory.

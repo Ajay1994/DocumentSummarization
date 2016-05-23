@@ -1,0 +1,156 @@
+load("/media/abhisheka/Windows8_OS/Users/Abhishek/Downloads/Compressed/PRODUCT Reco/IR.RData")
+View(T_Matrix)
+setwd("/home/abhisheka/Desktop/CN/attachments/DUC01/d05a/ap900322-0200")
+getwd()
+rm(list=ls(all=TRUE))
+fileloc<-"ap900322-0200.txt"
+conn <- file(fileloc,open="r")
+linn <-readLines(conn)
+isIntro=0
+txt<-""
+for (i in 1:length(linn)) {
+if(linn[i]=="Introduction:"){
+isIntro=1
+next
+}
+if(isIntro==1){
+txt<-paste(txt,linn[i],sep = " ",collapse = NULL)
+}
+}
+txt1<-gsub("[[:space:]]+", " ", txt)
+txt1<-gsub("`+", "", txt1)
+txt1<-gsub("'+", "", txt1)
+txt1<-gsub("[[:space:]]+", " ", txt1)
+txt1<-gsub("[@|$|;|:|!|,|_|-|(|)|\"|*|?|{|}]", "", txt1)
+txt1<-gsub("[-]", "", txt1)
+sl<-unlist( strsplit(txt1, "(?<=\\.|\\?)\\s(?=[A-Z])", perl = TRUE))
+sl
+review_source <- VectorSource(txt1)
+library(rjson)
+library(MASS)
+library(RTextTools)
+library(topicmodels)
+library(gdata)
+library(NLP)
+library(tm)
+review_source <- VectorSource(txt1)
+corpus <- Corpus(review_source)
+corpus <- tm_map(corpus, content_transformer(tolower))
+corpus <- tm_map(corpus, content_transformer(tolower))
+corpus <- tm_map(corpus, removePunctuation)
+corpus <- tm_map(corpus, stripWhitespace)
+corpus <- tm_map(corpus, removeWords, stopwords("english"))
+corpu$content
+corpus$content
+dtm <- DocumentTermMatrix(corpus)
+dtm <- as.matrix(DocumentTermMatrix(corpus))
+View(dtm)
+frequency <- colSums(dtm2)
+frequency <- colSums(dtm)
+frequency
+dtm[1,]<-dtm[1,]/rowSums(dtm)
+View(dtm)
+rowSums(dtm)
+dtm[1,1700s]
+dtm[1,"1700s"]
+unlist( strsplit(sl[1]," "))
+dtm[1,"1700"]
+dtm[1,"1900"]
+dtm[1,"1986"]
+exists(dtm[1,"1986"])
+is.null(dtm[1,"1986"])
+is.null(dtm[1,"1900"])
+is.null(dtm[1,"1986"])
+rownames(dtm)
+colnames(dtm)
+wordvec<-colnames(dtm)
+zero %in% wordvec
+'zero' %in% wordvec
+'zer' %in% wordvec
+getscentenceprob<-function(sen){
+senlist<-unlist( strsplit(sen," "))
+prob<-0
+for (i in 1:length(senlist)){
+if(i %in% wordvec){
+prob<-prob+log(dtm[1,i])
+}
+}
+prob
+}
+a<-getscentenceprob(sl[1])
+senlist<-unlist( strsplit(sl[1]," "))
+prob<-0
+for (i in 1:length(senlist)){
+if(i %in% wordvec){
+prob<-prob+log(dtm[1,i])
+}
+}
+for (i in 1:length(senlist)){
+if(senlist[i] %in% wordvec){
+prob<-prob+log(dtm[1,senlist[i]])
+}
+}
+log(dtm[1,"mad"])
+a<-getscentenceprob(sl[1])
+getscentenceprob<-function(sen){
+senlist<-unlist( strsplit(sen," "))
+prob<-0
+for (i in 1:length(senlist)){
+if(senlist[i] %in% wordvec){
+prob<-prob+log(dtm[1,senlist[i]])
+}
+}
+prob
+}
+a<-getscentenceprob(sl[1])
+sl
+b<-seq(1:length(sl))
+probvec<-c("")
+probvec<-vector
+probvec<-vector(length = length(sl))
+names(probvec)<-b
+probvec["1"]
+probvec[1]
+probvec[as.char(1)]
+probvec[as.character(1)]
+str(probvec[as.character(1)])
+str(probvec[1])
+veca <- c("a","b","c")
+veca
+veca[1]
+str(veca[1])
+names(veca) <- c(2,3,1)
+veca
+veca[1]
+veca["1"]
+i <- 2
+veca[i]
+veca[as.character(i)]
+for(i in 1:length(sl)){
+probvec[as.character(i)]<-getscentenceprob(sl[1])
+}
+for(i in 1:length(sl)){
+probvec[as.character(i)]<-getscentenceprob(sl[i])
+}
+probvec
+veca <- c(1,3,2)
+names(veca) <- c(2,3,1)
+veca
+sort(veca)
+sort(probvec,decreasing = TRUE)
+names(probvec)
+probvec<-sort(probvec,decreasing = TRUE)
+names(probvec)
+for(i in names(probvec)){
+sl[i]
+}
+for(i in names(probvec)){
+print(sl[i])
+}
+for(i in names(probvec)){
+print(sl[as.numeric(i)])
+}
+sl
+for(i in names(probvec)){
+print(sl[as.numeric(i)])
+}

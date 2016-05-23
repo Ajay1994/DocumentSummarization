@@ -1,0 +1,199 @@
+# -*- coding: utf-8 -*-
+	"""
+	Created on Fri Apr 15 11:22:51 2016
+
+	@author: 15CS60R10 (Ajay Kumar Jaiswal)
+	@topic: Word2Vec Modeling of the Document Sentences 
+	"""
+	import gensim
+	from gensim.models import word2vec
+	import pickle
+	import os
+	import pandas as pd
+	from nltk.tokenize import sent_tokenize, word_tokenize
+	from nltk.corpus import stopwords
+	import numpy as np
+	from scipy import spatial
+	import math
+	from scipy import linalg as la
+	#Change directory the the Complex Network Work Directory
+	os.chdir("/home/mt1/15CS60R24/Complex")
+
+	#Creating the word  to Vec model from the Google News Corpus
+	model = word2vec.Word2Vec.load_word2vec_format('GoogleNews-vectors-negative300.bin.gz', binary=True)
+
+
+	#################################################################################
+	#Saving the model for further use
+	model.save("word2vecmodel")
+
+	#Loading the model
+	loadedmodel = word2vec.Word2Vec.load("word2vecmodel")
+
+	################################################################################
+	#Dump the model learned for further Using pickle
+	with open('/home/mt1/15CS60R24/Complex/learnedword2vecmodel', 'wb') as f:
+	   pickle.dump(model, f)
+
+	#Reload the model for ur usage   
+	with open('/home/mt1/15CS60R24/Complex/learnedword2vecmodel', 'rb') as f:
+		loadedmodel = pickle.load(f)
+		
+
+	#listing all the files in the DUC01 in the list txtFiles
+	txtFiles = []
+	for root, dirs, files in os.walk("./dataset/DUC01"):
+		for file in files:
+			if file.endswith(".txt"):
+				file = os.path.join(root, file)
+				print(file)
+				txtFiles.append(file)
+				
+		
+		
+	#######################################################################
+	# Getting the list of all the files in the dataset
+	#######################################################################
+	files = open("./filelist.txt", 'w')
+	for file in txtFiles:
+		filename = file.split("/")
+		filename = filename[len(filename)-1]
+		files.write(filename)
+		files.write("\n")
+		
+	files.close()    
+
+	################################################################################
+	   
+	#Opening and Reading the file as a string 
+	with open('./dataset/DUC01/d39g/wsj900615-0131/wsj900615-0131.txt', 'r') as myfile:
+		data=myfile.read().replace('\n', '')
+
+	#Tokenize into sentences    
+	sentences = sent_tokenize(data)
+
+	#Get a list of stop words of english sentence
+	stop_words = set(stopwords.words("english"))
+
+	#Getting the set of the vocabulary of the model
+	vocab = model.vocab
+
+	#Creating a matrix to hold the sentence vectors of the doucment
+	sent_matrix = np.zeros((len(sentences), 300))
+
+	sent_no = 0
+
+	for s in sentences:
+		#tokenize the sentence
+		words = word_tokenize(s)
+		#create a sentence vector of dimension 300
+		sentVector = np.zeros(300)
+		#filter out the words in sentences which not belong to stop word category
+		filteredSentence = [w for w in words if not w in stop_words] 
+		#for each word of the sentence create a word2Vec and add each one to form a sentence vector
+		for word in filteredSentence:
+			#print(word)
+			if word in vocab:
+				wordVector = model[word]
+				sentVector = sentVector + wordVector
+		#Set the matrix ith row(sentence) with the sentence vector
+		sent_matrix[sent_no,:] = sentVector
+		#Iterate over the next sentence
+		sent_no += 1
+
+
+	#################################################################################
+	# Cosine Similarity and Graph Construction
+	#################################################################################
+
+	#Opening the graph.txt to write the weighted complete graph between between sentence vectors
+	#We are using the cosine similarity between all pair sentence as the node
+	#Graph written in format (Source Destination Weight)
+	 
+	graph_file = open("graph.txt", 'w')
+
+	for nodeSource in range(0, (len(sentences)-1)):
+		for nodeDest in range(0, (len(sentences)-1)):
+			node1 = sent_matrix[nodeSource:nodeSource+1]
+			node2 = sent_matrix[nodeDest:nodeDest+1]
+			node1 = list(node1[0])
+			node2 = list(node2[0])
+			cosine_similarity = 1 - spatial.distance.cosine(node1, node2)
+			modified_similaity = int(cosine_similarity*100)
+			print(nodeSource, nodeDest, modified_similaity)
+			graph_file.write(str(nodeSource))
+			graph_file.write(" ")
+			graph_file.write(str(nodeDest))
+			graph_file.write(" ")
+			graph_file.write(str(modified_similaity))
+			graph_file.write("\n")
+			
+	graph_file.close()
+
+	##################################################################################
+	# Looping the above developed algorithm for all the DUC01 data
+	##################################################################################
+
+	#Get a list of stop words of english sentence
+	stop_words = set(stopwords.words("english"))
+
+	#Getting the set of the vocabulary of the model
+	vocab = model.vocab
+
+
+	count = 1
+	#fileList = txtFiles[1:5]
+	for file in txtFiles:
+		print("---------------------------------------------------------------------")
+		print(count," : ", file)
+		print("---------------------------------------------------------------------")
+		with open(file, 'r') as myfile:
+			data=myfile.read().replace('\n', '')
+
+		#Tokenize into sentences    
+		sentences = sent_tokenize(data)
+		#Creating a matrix to hold the sentence vectors of the doucment
+		sent_matrix = np.zeros((len(sentences), 300))
+
+		sent_no = 0
+
+		for s in sentences:
+			#tokenize the sentence
+			words = word_tokenize(s)
+			#create a sentence vector of dimension 300
+			sentVector = np.zeros(300)
+			#filter out the words in sentences which not belong to stop word category
+			filteredSentence = [w for w in words if not w in stop_words] 
+			#for each word of the sentence create a word2Vec and add each one to form a sentence vector
+			for word in filteredSentence:
+				print(word)
+				if word in vocab:
+					wordVector = model[word]
+					sentVector = sentVector + wordVector
+			#Set the matrix ith row(sentence) with the sentence vector
+			sent_matrix[sent_no,:] = sentVector
+			#Iterate over the next sentence
+			sent_no += 1
+		filename = file.split("/")
+		filename = filename[len(filename)-1]
+		graph_file = open("./graphs/"+filename, 'w')
+		for nodeSource in range(0, (len(sentences)-1)):
+			for nodeDest in range(0, (len(sentences)-1)):
+				node1 = sent_matrix[nodeSource:nodeSource+1]
+				node2 = sent_matrix[nodeDest:nodeDest+1]
+				node1 = list(node1[0])
+				node2 = list(node2[0])
+				cosine_similarity = 1 - spatial.distance.cosine(node1, node2)
+				if(math.isnan(cosine_similarity)):
+					continue
+				modified_similaity = int(cosine_similarity*100)
+				print(nodeSource, nodeDest, modified_similaity)
+				graph_file.write(str(nodeSource))
+				graph_file.write(" ")
+				graph_file.write(str(nodeDest))
+				graph_file.write(" ")
+				graph_file.write(str(modified_similaity))
+				graph_file.write("\n")
+			
+		graph_file.close()
+		count = count + 1

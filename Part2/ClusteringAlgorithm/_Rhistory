@@ -1,0 +1,512 @@
+findBigramProb(DT NN)
+findBigramProb("DT NN")
+pos[1]
+bigram < "DT NN"
+bigram <- "DT NN"
+pos <- unlist(strsplit(bigram, split = " "))
+countBigram <- 0;
+countUnigram <- 0;
+pso[1]
+pos[1]
+pos[2]
+bigramMatrix[1, 1] == pos[1]
+bigramMatrix[1, 2] == pos[2]
+bigramMatrix[1, 1] == pos[1] && bigramMatrix[1, 2] == pos[2]
+findBigramProb <- function(bigram){
+pos <- unlist(strsplit(bigram, split = " "))
+countBigram <- 0;
+countUnigram <- 0;
+for(i in 1: nrow(bigramMatrix)- 1){
+if(bigramMatrix[i, 1] == pos[1] && bigramMatrix[i, 2] == pos[2]){
+countBigram <- countBigram + 1
+}
+countBigram
+}
+}
+findBigramProb("DT NN")
+for(i in 1: nrow(bigramMatrix)- 1){
+if(bigramMatrix[i, 1] == pos[1] && bigramMatrix[i, 2] == pos[2]){
+countBigram <- countBigram + 1
+}
+countBigram
+}
+findBigramProb <- function(bigram){
+pos <- unlist(strsplit(bigram, split = " "))
+countBigram <- 0;
+countUnigram <- 0;
+for(i in 1: nrow(bigramMatrix)- 1){
+if(!is.na(bigramMatrix[i, 1]) && !is.na(bigramMatrix[i, 2])){
+if(bigramMatrix[i, 1] == pos[1] && bigramMatrix[i, 2] == pos[2]){
+countBigram <- countBigram + 1
+}
+}
+}
+}
+findBigramProb("DT NA")
+unique(bigramMatrix[,1])
+posfile <- readLines("F:\\Java Workspace\\NLP\\POSTagging\\iofiles\\output.txt")
+posfile <- paste(posfile, collapse = ' ')
+taggedWord <- unlist(strsplit(posfile, split = " "))
+annotatedMatrix <- matrix(ncol = 2, nrow= length(taggedWord))
+colnames(annotatedMatrix) <- c("word", "POS")
+for(i in 1:length(taggedWord)){
+line <- unlist(strsplit(taggedWord[i], split = "/"))
+annotatedMatrix[i,1] <- line[1]
+annotatedMatrix[i,2] <- line[2]
+}
+bigramMatrix <- matrix(ncol = 2, nrow= length(taggedWord))
+for(i in 1: nrow(annotatedMatrix)-1){
+bigramMatrix[i, 1] <- annotatedMatrix[i, 2]
+bigramMatrix[i, 2] <- annotatedMatrix[i+1, 2]
+}
+unique(bigramMatrix[1,])
+unique(bigramMatrix[,1])
+findBigramProb <- function(bigram){
+pos <- unlist(strsplit(bigram, split = " "))
+countBigram <- 0;
+countUnigram <- 0;
+for(i in 1: nrow(bigramMatrix)- 1){
+if(!is.na(bigramMatrix[i, 1]) && !is.na(bigramMatrix[i, 2])){
+if(bigramMatrix[i, 1] == pos[1] && bigramMatrix[i, 2] == pos[2]){
+countBigram <- countBigram + 1
+}
+}
+}
+}
+findBigramProb("DT NN")
+!is.na(bigramMatrix[2, 1]) && !is.na(bigramMatrix[2, 2])
+pos <- unlist(strsplit("DT NN", split = " "))
+countBigram <- 0;
+countUnigram <- 0;
+for(i in 1: nrow(bigramMatrix)- 1){
+if(!is.na(bigramMatrix[i, 1]) && !is.na(bigramMatrix[i, 2])){
+if(bigramMatrix[i, 1] == pos[1] && bigramMatrix[i, 2] == pos[2]){
+countBigram <- countBigram + 1
+}
+}
+}
+pos <- unlist(strsplit("DT NN", split = " "))
+countBigram <- 0;
+countUnigram <- 0;
+for(i in 1: nrow(bigramMatrix)- 1){
+i
+if(!is.na(bigramMatrix[i, 1]) && !is.na(bigramMatrix[i, 2])){
+if(bigramMatrix[i, 1] == pos[1] && bigramMatrix[i, 2] == pos[2]){
+countBigram <- countBigram + 1
+}
+}
+}
+bigramMatrix[is.na(bigramMatrix)] <- "NONE"
+pos <- unlist(strsplit("DT NN", split = " "))
+countBigram <- 0;
+countUnigram <- 0;
+for(i in 1: nrow(bigramMatrix)- 1){
+i
+if(!is.na(bigramMatrix[i, 1]) && !is.na(bigramMatrix[i, 2])){
+if(bigramMatrix[i, 1] == pos[1] && bigramMatrix[i, 2] == pos[2]){
+countBigram <- countBigram + 1
+}
+}
+}
+for(i in 1: nrow(bigramMatrix)- 1){
+bigramMatrix[i,1]
+}
+for(i in 1: nrow(bigramMatrix)){
+bigramMatrix[i,1]
+}
+bigramMatrix[2,2]
+nrow(bigramMatrix)
+for(i in 1:nrow(bigramMatrix)){
+bigramMatrix[i,1]
+}
+for(i in 1:nrow(bigramMatrix)){
+hello <- bigramMatrix[i,1]
+hello
+}
+for(i in 1:nrow(bigramMatrix)){
+hello <- bigramMatrix[i,1]
+print(hello)
+}
+for(i in 1:nrow(bigramMatrix)){
+hello <- bigramMatrix[i,1]
+if(hello == "DT"){
+print(hello)
+}
+}
+for(i in 1:nrow(bigramMatrix)){
+pos1 <- bigramMatrix[i,1]
+pos2 <- bigramMatrix[i,2]
+if(pos1 == "DT" && pos2 == "NN"){
+print(hello)
+}
+}
+findBigramProb <- function(bigram){
+pos <- unlist(strsplit(bigram, split = " "))
+countBigram <- 0;
+countUnigram <- 0;
+for(i in 1: nrow(bigramMatrix)- 1){
+pos1 <- bigramMatrix[i,1]
+pos2 <- bigramMatrix[i,2]
+if(pos1 == pos[1] && pos2 == pos[2]){
+countBigram <- countBigram + 1
+}
+}
+countBigram
+}
+findBigramProb("DT NN")
+findBigramProb <- function(bigram){
+pos <- unlist(strsplit(bigram, split = " "))
+countBigram <- 0;
+countUnigram <- 0;
+for(i in 1: nrow(bigramMatrix)- 1){
+pos1 <- bigramMatrix[i,1]
+pos2 <- bigramMatrix[i,2]
+if(pos1 == "DT" && pos2 == "NN"){
+countBigram <- countBigram + 1
+}
+}
+countBigram
+}
+findBigramProb("DT NN")
+for(i in 1:nrow(bigramMatrix)){
+pos1 <- bigramMatrix[i,1]
+pos2 <- bigramMatrix[i,2]
+if(pos1 == "DT" && pos2 == "NN"){
+print(pos1)
+}
+}
+pos <- unlist(strsplit("DT NN", split = " "))
+countBigram <- 0;
+countUnigram <- 0;
+for(i in 1:nrow(bigramMatrix)){
+pos1 <- bigramMatrix[i,1]
+pos2 <- bigramMatrix[i,2]
+if(pos1 == pos[1] && pos2 == pos[2]){
+print(pos1)
+}
+}
+findBigramProb <- function(bigram){
+pos <- unlist(strsplit(bigram, split = " "))
+countBigram <- 0;
+countUnigram <- 0;
+for(i in 1:nrow(bigramMatrix)){
+pos1 <- bigramMatrix[i,1]
+pos2 <- bigramMatrix[i,2]
+if(pos1 == pos[1] && pos2 == pos[2]){
+print(pos1)
+}
+}
+}
+findBigramProb("DT NN")
+findBigramProb <- function(bigram){
+pos <- unlist(strsplit(bigram, split = " "))
+countBigram <- 0;
+countUnigram <- 0;
+for(i in 1:nrow(bigramMatrix)){
+pos1 <- bigramMatrix[i,1]
+pos2 <- bigramMatrix[i,2]
+if(pos1 == pos[1] && pos2 == pos[2]){
+countBigram <- countBigram+1
+}
+}
+countBigram
+}
+value <- findBigramProb("DT NN")
+value
+findBigramProb <- function(bigram){
+pos <- unlist(strsplit(bigram, split = " "))
+countBigram <- 0;
+countUnigram <- 0;
+for(i in 1:nrow(bigramMatrix)){
+pos1 <- bigramMatrix[i,1]
+pos2 <- bigramMatrix[i,2]
+if(pos1 == pos[1] && pos2 == pos[2]){
+countBigram <- countBigram+1
+}
+if(pos1 == pos[1] || pos2 == pos[1]){
+countUnigram <- countUnigram+1
+}
+}
+countUnigram <- countUnigram/2
+likelihood <- countBigram/countUnigram
+likelihood
+}
+result <- findBigramProb("DT NN")
+result
+result <- findBigramProb("DT NN")
+result
+findBigramProb <- function(bigram){
+pos <- unlist(strsplit(bigram, split = " "))
+countBigram <- 0;
+countUnigram <- 0;
+for(i in 1:nrow(bigramMatrix)){
+pos1 <- bigramMatrix[i,1]
+pos2 <- bigramMatrix[i,2]
+if(pos1 == pos[1] && pos2 == pos[2]){
+countBigram <- countBigram+1
+}
+if(pos1 == pos[1] || pos2 == pos[1]){
+countUnigram <- countUnigram+1
+}
+}
+countUnigram <- countUnigram/2
+likelihood <- countBigram/countUnigram
+likelihood
+}
+findBigramProb("DT NN")
+mtcars
+mtcars
+d <- dist(as.matrix(mtcars))
+temp <- as.matrix(d)
+temp <- as.matrix(d)
+fit <- hclust(d)
+fit
+plot(fit)
+d <- dist(mydata, method = "euclidean") # distance matrix
+fit <- hclust(d, method="ward")
+plot(fit) # display dendogram
+groups <- cutree(fit, k=5) # cut tree into 5 clusters
+# draw dendogram with red borders around the 5 clusters
+rect.hclust(fit, k=5, border="red")
+fit <- hclust(d, method="ward")
+plot(fit) # display dendogram
+fit <- hclust(d, method="ward.D")
+plot(fit) # display dendogram
+groups <- cutree(fit, k=5) # cut tree into 5 clusters
+groups
+groups[1]
+groups[2]
+groups[1][1]
+groups[1][2]
+groups[4][1]
+groups[4][2]
+rect.hclust(fit, k=5, border="red")
+value <- sort(groups)
+value
+which(value == 5)
+groups <- cutree(fit, k=10) # cut tree into 5 clusters
+# draw dendogram with red borders around the 5 clusters
+rect.hclust(fit, k=5, border="red")
+fit <- hclust(d, method="ward.D")
+plot(fit) # display dendogram
+groups <- cutree(fit, k=10) # cut tree into 5 clusters
+# draw dendogram with red borders around the 5 clusters
+rect.hclust(fit, k=5, border="red")
+fit <- hclust(d, method="ward.D")
+plot(fit) # display dendogram
+groups <- cutree(fit, k=10) # cut tree into 5 clusters
+# draw dendogram with red borders around the 5 clusters
+rect.hclust(fit, k=10, border="red")
+setwd("E:/IIT KHARAGPUR/Semester II/Complex Networks/Project/workspace")
+lines <- readLines("textfile.txt")
+setwd("E:/IIT KHARAGPUR/Semester II/Complex Networks/Project/workspace")
+lines <- readLines("textfile.txt")
+summarytext <- paste(lines, collapse = "")
+sentences <- unlist(strsplit(summarytext, split = "."))
+sentences[1]
+length(sentences)
+sentences[4]
+sentences[8]
+summarytext
+write(summarytext, file = "test.txt")
+lines <- readLines("textfile.txt")
+summarytext <- paste(lines, collapse = "")
+sentences <- unlist(strsplit(summarytext, split = "\.\ "))
+sentences <- unlist(strsplit(summarytext, split = ".\ "))
+sentences[1]
+sentences[2]
+sentences[3]
+sentences <- unlist(strsplit(summarytext, split = "\\.\ "))
+sentences[1]
+sentences[2]
+sentences[3]
+write(sentences, file = "test.txt")
+sentences[32]
+sentences %in% ""
+sentences <- sentences[sentences %in% ""]
+sentences %in% ""
+summarytext <- paste(lines, collapse = "")
+sentences <- unlist(strsplit(summarytext, split = "\\.\ "))
+sentences <- sentences[ ! sentences %in% ""]
+write(sentences, file = "test.txt")
+library("tm")
+corpusText <- VectorSource(sentences)
+corpusText < Corpus(corpusText)
+corpusText <- Corpus(corpusText)
+corpusText <- VectorSource(sentences)
+corpusText <- Corpus(corpusText)
+corpus <- Corpus(corpusText)
+corpus <- Corpus(corpusText)
+corpusText <- Corpus(corpusText)
+library("tm")
+corpusText <- VectorSource(sentences)
+corpusText <- Corpus(corpusText)
+corpus <- tm_map(corpusText, content_transformer(tolower))
+corpus <- tm_map(corpus, removePunctuation)
+corpus <- tm_map(corpus, stripWhitespace)
+corpus <- tm_map(corpus, removeWords, stopwords("english"))
+stopwords("english")
+dtm <- DocumentTermMatrix(corpus)
+dtm2 <- as.matrix(dtm)
+View(dtm2)
+terms <- DocumentTermMatrix(corpus,control = list(weighting = function(x) weightTfIdf(x, normalize = FALSE)))
+terms
+tfidf <- as.matrix(terms)
+View(tfidf)
+terms <- DocumentTermMatrix(corpus,control = list(weighting = function(x) weightTfIdf(x, normalize = TRUE)))
+tfidf <- as.matrix(terms)
+library("tm")
+corpusText <- VectorSource(sentences)
+corpusText <- Corpus(corpusText)
+corpus <- tm_map(corpusText, content_transformer(tolower))
+corpus <- tm_map(corpus, removePunctuation)
+corpus <- tm_map(corpus, stripWhitespace)
+corpus <- tm_map(corpus, removeWords, stopwords("english"))
+terms <- DocumentTermMatrix(corpus,control = list(weighting = function(x) weightTfIdf(x, normalize = TRUE)))
+tfidf <- as.matrix(terms)
+corpus  <-Corpus(DirSource("E:/IIT KHARAGPUR/Semester II/Complex Networks/Project/workspace/textfile.txt"), readerControl = list(blank.lines.skip=TRUE));
+corpus  <-Corpus(DirSource("E:/IIT KHARAGPUR/Semester II/Complex Networks/Project/workspace/"), readerControl = list(blank.lines.skip=TRUE));
+#some preprocessing
+corpus <- tm_map(corpus, removeWords, stopwords("english"))
+corpus <- tm_map(corpus, stripWhitespace)
+corpus <- tm_map(corpus, stemDocument, language="english")
+#creating term matrix with TF-IDF weighting
+terms <-DocumentTermMatrix(corpus,control = list(weighting = function(x) weightTfIdf(x, normalize = FALSE)))
+library("SnowballC")
+corpus <- tm_map(corpusText, content_transformer(tolower))
+corpus <- tm_map(corpus, removePunctuation)
+corpus <- tm_map(corpus, stripWhitespace)
+corpus <- tm_map(corpus, removeWords, stopwords("english"))
+terms <- DocumentTermMatrix(corpus,control = list(weighting = function(x) weightTfIdf(x, normalize = TRUE)))
+tfidf <- as.matrix(terms)
+library("tm")
+corpusText <- VectorSource(sentences)
+corpusText <- Corpus(corpusText)
+corpus <- tm_map(corpusText, content_transformer(tolower))
+corpus <- tm_map(corpus, removePunctuation)
+corpus <- tm_map(corpus, stripWhitespace)
+corpus <- tm_map(corpus, removeWords, stopwords("english"))
+terms <- DocumentTermMatrix(corpus,control = list(weighting = function(x) weightTfIdf(x, normalize = FALSE)))
+tfidf <- as.matrix(terms)
+dissimilarity(tfidf, method = "cosine")
+distance <- dist(tfidf, method = "cosine")
+docsdissim <- dist(as.matrix(tfidf), method = "cosine")
+d <- dist(as.matrix(tfidf))
+temp <- as.matrix(d)
+View(temp)
+fit <- hclust(d, method="ward.D")
+plot(fit) # display dendogram
+fit <- hclust(d, method="ward.D")
+plot(fit) # display dendogram
+groups <- cutree(fit, k=5) # cut tree into 5 clusters
+# draw dendogram with red borders around the 5 clusters
+rect.hclust(fit, k=5, border="red")
+fit <- hclust(d, method="ward.D")
+plot(fit) # display dendogram
+groups <- cutree(fit, k=8) # cut tree into 5 clusters
+# draw dendogram with red borders around the 5 clusters
+rect.hclust(fit, k=8, border="red")
+fit <- hclust(d, method="ward.D")
+plot(fit) # display dendogram
+groups <- cutree(fit, k=2) # cut tree into 5 clusters
+# draw dendogram with red borders around the 5 clusters
+rect.hclust(fit, k=2, border="red")
+fit <- hclust(d, method="ward.D")
+plot(fit) # display dendogram
+groups <- cutree(fit, k=5) # cut tree into 5 clusters
+# draw dendogram with red borders around the 5 clusters
+rect.hclust(fit, k=5, border="red")
+groups
+cluster1 <- which(groups = 1)
+cluster1 <- which(groups == 1)
+cluster1
+cluster <- which(groups == 1)
+cluster1 <- names(cluster)
+cluster1
+cluster1Sentences <- c()
+for(i in 1: length(cluster1)){
+cluster1Sentences <- c(cluster1Sentences, sentences[cluster1[i]])
+}
+cluster1Sentences[1]
+cluster1
+cluster1Sentences <- c()
+for(i in 1: length(cluster1)){
+cluster1Sentences <- c(cluster1Sentences, sentences[as.integer(cluster1[i])])
+}
+cluster1Sentences[1]
+cluster1Sentences[4]
+corpusText1 <- VectorSource(cluster1Sentences)
+corpusText1 <- Corpus(corpusText1)
+corpus1 <- tm_map(corpusText1, content_transformer(tolower))
+corpus1 <- tm_map(corpus1, removePunctuation)
+corpus1 <- tm_map(corpus1, stripWhitespace)
+corpus1 <- tm_map(corpus1, removeWords, stopwords("english"))
+terms1 <- DocumentTermMatrix(corpus1,control = list(weighting = function(x) weightTfIdf(x, normalize = FALSE)))
+tfidf1 <- as.matrix(terms1)
+View(tfidf1)
+eigenvalues <- eigen(tfidf1)
+d1 <- dist(as.matrix(tfidf1))
+temp1 <- as.matrix(d1)
+View(temp1)
+fit1 <- hclust(d1, method="ward.D")
+plot(fit1) # display dendogram
+groups1 <- cutree(fit1, k=5) # cut tree into 5 clusters
+# draw dendogram with red borders around the 5 clusters
+rect.hclust(fit1, k=5, border="red")
+eigenValues <- eigen(temp1)
+eigenValues
+eigenValues$values
+eigenvectors <- as.matrix(eigenValues$vectors)
+View(eigenvectors)
+principalVector <- eigenvectors[,1]
+principalVector
+length(principalVector)
+names(principalVector) <- seq(1:28)
+principalVector
+sortedprincipalVector <- sort(principalVector, decreasing = TRUE)
+names(sortedprincipalVector)
+rect.hclust(fit, k=5, border="red")
+library("tm")
+corpusText <- VectorSource(sentences)
+corpusText <- Corpus(corpusText)
+corpus <- tm_map(corpusText, content_transformer(tolower))
+corpus <- tm_map(corpus, removePunctuation)
+corpus <- tm_map(corpus, stripWhitespace)
+corpus <- tm_map(corpus, removeWords, stopwords("english"))
+terms <- DocumentTermMatrix(corpus,control = list(weighting = function(x) weightTfIdf(x, normalize = FALSE)))
+tfidf <- as.matrix(terms)
+d <- dist(as.matrix(tfidf))
+fit <- hclust(d, method="ward.D")
+plot(fit) # display dendogram
+groups <- cutree(fit, k=5) # cut tree into 5 clusters
+# draw dendogram with red borders around the 5 clusters
+rect.hclust(fit, k=5, border="red")
+cluster <- which(groups == 1)
+cluster1 <- names(cluster)
+cluster1Sentences <- c()
+for(i in 1: length(cluster1)){
+cluster1Sentences <- c(cluster1Sentences, sentences[as.integer(cluster1[i])])
+}
+corpusText1 <- VectorSource(cluster1Sentences)
+corpusText1 <- Corpus(corpusText1)
+corpus1 <- tm_map(corpusText1, content_transformer(tolower))
+corpus1 <- tm_map(corpus1, removePunctuation)
+corpus1 <- tm_map(corpus1, stripWhitespace)
+corpus1 <- tm_map(corpus1, removeWords, stopwords("english"))
+terms1 <- DocumentTermMatrix(corpus1,control = list(weighting = function(x) weightTfIdf(x, normalize = FALSE)))
+tfidf1 <- as.matrix(terms1)
+d1 <- dist(as.matrix(tfidf1))
+temp1 <- as.matrix(d1)
+fit1 <- hclust(d1, method="ward.D")
+plot(fit1) # display dendogram
+groups1 <- cutree(fit1, k=5) # cut tree into 5 clusters
+# draw dendogram with red borders around the 5 clusters
+rect.hclust(fit1, k=5, border="red")
+eigenValues <- eigen(temp1)
+eigenValues$values
+eigenvectors <- as.matrix(eigenValues$vectors)
+principalVector <- eigenvectors[,1]
+names(principalVector) <- seq(1:28)
+sortedprincipalcVector <- sort(principalVector, decreasing = TRUE)
+names(sortedprincipalVector)
+principalVector
